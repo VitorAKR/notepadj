@@ -15,7 +15,7 @@ public class FileFunctions {
 	public void newFile() {
 		//erase the current text
 		gui.textArea.setText("");
-		gui.window.setTitle("New File - NotepadJ");
+		gui.window.setTitle("Untitled - NotepadJ");
 		fileName = null;
 		fileAddress = null;
 	}

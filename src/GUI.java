@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -9,17 +10,25 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
 
 public class GUI implements ActionListener{
 	
 	JFrame window;
+	//TEXT AREA:
 	JTextArea textArea;
 	JScrollPane scrollPane;
+	//MENU BAR:
 	JMenuBar menuBar;
 	JMenu menuFile, menuEdit, menuFormat, menuColor, menuHelp;
+	//FILE
 	JMenuItem iNew, iOpen, iSave, iSaveAs, iExit;
+	//FORMAT
+	JMenuItem iWordWarp;
+	JMenu menuFont, menuFontSize;
 	
 	FileFunctions file = new FileFunctions(this);
+	FormatFunctions format = new FormatFunctions(this);
 	
 	public static void main(String[] args) {
 		
@@ -37,8 +46,9 @@ public class GUI implements ActionListener{
 		//call menuBar
 		createMenuBar();
 		
-		//call menu items for File
+		//call menu items
 		createFileMenu();
+		createFormatMenu();
 		
 		//make it visible
 		window.setVisible(true);
@@ -46,7 +56,7 @@ public class GUI implements ActionListener{
 	}
 	
 	public void createWindow() {
-		window = new JFrame("NotepadJ");
+		window = new JFrame("Untitled - NotepadJ");
 		window.setSize(1010, 600);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -85,30 +95,49 @@ public class GUI implements ActionListener{
 	}
 	
 	public void createFileMenu() {
-		iNew = new JMenuItem("New                          Ctrl+N");
+		iNew = new JMenuItem("New     ");
 		iNew.addActionListener(this);
 		iNew.setActionCommand("New");
+		//add key trigger
+		iNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
 		menuFile.add(iNew);
 		
-		iOpen = new JMenuItem("Open                        Ctrl+O");
+		iOpen = new JMenuItem("Open...  ");
 		iOpen.addActionListener(this);
 		iOpen.setActionCommand("Open");
+		iOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
 		menuFile.add(iOpen);
 		
-		iSave = new JMenuItem("Save                        Ctrl+S");
+		iSave = new JMenuItem("Save     ");
 		iSave.addActionListener(this);
 		iSave.setActionCommand("Save");
+		iSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK));
 		menuFile.add(iSave);
 		
-		iSaveAs = new JMenuItem("Save As..      Ctrl+Shift+S");
+		iSaveAs = new JMenuItem("Save As..");
 		iSaveAs.addActionListener(this);
 		iSaveAs.setActionCommand("SaveAs");
+		iSaveAs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK | KeyEvent.SHIFT_DOWN_MASK));
 		menuFile.add(iSaveAs);
 		
-		iExit = new JMenuItem("Exit");
+		iExit = new JMenuItem("Exit     ");
 		iExit.addActionListener(this);
 		iExit.setActionCommand("Exit");
 		menuFile.add(iExit);
+		
+	}
+	
+	public void createFormatMenu() {
+		iWordWarp = new JMenuItem("World Wrap: Off");
+		iWordWarp.addActionListener(this);
+		iWordWarp.setActionCommand("World Wrap");
+		menuFormat.add(iWordWarp);
+		
+		menuFont = new JMenu("Font..");
+		menuFormat.add(menuFont);
+		
+		menuFontSize = new JMenu("Font Size");
+		menuFormat.add(menuFontSize);
 		
 	}
 
@@ -125,5 +154,8 @@ public class GUI implements ActionListener{
 		case "Exit": file.exit(); break;
 		}
 	}
+	
+	//icon link:
+	// https://www.freeiconspng.com/img/17537
 	
 }
